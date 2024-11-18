@@ -1,14 +1,13 @@
 import numpy as np
-from numpy.typing import NDArray
+import matplotlib.pyplot as plt
 from heapq import heappop, heappush
 
-def a_star(cost_map: NDArray[np.int8], start: tuple[int, int], end: tuple[int, int]) -> list:
-    '''Input a cost map, output an ordered list of locations. Follows A* algorithm'''
-    
-    def heuristic(a: tuple[int, int], b: tuple[int, int]) -> float:
+# A* function definition (your previous code here)
+def a_star(cost_map, start, end):
+    def heuristic(a, b):
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
-    
-    def get_neighbors(node: tuple[int, int], rows: int, cols: int) -> list[tuple[int, int]]:
+
+    def get_neighbors(node, rows, cols):
         x, y = node
         neighbors = []
         if x > 0: neighbors.append((x - 1, y))
@@ -16,18 +15,16 @@ def a_star(cost_map: NDArray[np.int8], start: tuple[int, int], end: tuple[int, i
         if y > 0: neighbors.append((x, y - 1))
         if y < cols - 1: neighbors.append((x, y + 1))
         return neighbors
-    
+
     rows, cols = cost_map.shape
     open_set = []
     heappush(open_set, (0, start))
     came_from = {}
-
     g_score = np.full((rows, cols), np.inf, dtype=np.float32)
     g_score[start] = 0
-    
     f_score = np.full((rows, cols), np.inf, dtype=np.float32)
     f_score[start] = heuristic(start, end)
-    
+
     while open_set:
         _, current = heappop(open_set)
         if current == end:
@@ -37,14 +34,13 @@ def a_star(cost_map: NDArray[np.int8], start: tuple[int, int], end: tuple[int, i
                 path.append(current)
             path.reverse()
             return path
-        
+
         for neighbor in get_neighbors(current, rows, cols):
             tentative_g_score = g_score[current] + cost_map[neighbor]
-            
             if tentative_g_score < g_score[neighbor]:
                 came_from[neighbor] = current
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = tentative_g_score + heuristic(neighbor, end)
                 heappush(open_set, (f_score[neighbor], neighbor))
-    
+
     return []
