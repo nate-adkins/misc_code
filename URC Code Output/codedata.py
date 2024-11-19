@@ -15,7 +15,7 @@ def couint_lines_in_repo(directory_url):
     if response.status_code == 200:
         files = response.json()
         for file in files:
-            if file['type'] == 'file' and file['name'].endswith('.py') or file['type'] == 'file' and file['name'].endswith('.cpp'):
+            if file['type'] == 'file' and file['name'].endswith('.py') or file['type'] == 'file' and file['name'].endswith('.cpp') or file['type'] == 'file' and file['name'].endswith('.js') or file['type'] == 'file' and file['name'].endswith('.jsx'):
                 file_url = file['download_url']
                 total_lines += count_lines_in_file(file_url) 
             elif file['type'] == 'dir': 
@@ -29,7 +29,16 @@ def main():
     data_proportional = {}
 
     personal_repos = ['nate-adkins/myactuator','nate-adkins/controls']
-    urc_repos_names = ['rf-modem-stuff', 'autonomy_2025', 'CameraManager', 'isaac_reinforcement_standalone', 'Ros2CommsSettings2025', 'pico_interface_pkg', 'Camera_Manager']
+    
+    urc_repos_names = ["pico_interface_pkg", 
+                       "ros2-rover-gui", 
+                       "CameraManager", 
+                       "isaac_reinforcement_standalone",
+                       "autonomy_2025",
+                       "rf-modem-stuff",
+                       "Ros2CommsSettings2025",
+                    ]
+    
     urc_repos =  [f'wvu-urc/' + name for name in urc_repos_names ]
 
     repos = personal_repos + urc_repos
@@ -51,7 +60,7 @@ def main():
     
     plt.figure(figsize=(10, 6))
     plt.pie(data_count.values(), labels=data_count.keys(), autopct=lambda p: f'{int(p * total / 100)} ({p:.1f}%)')
-    plt.title(f'Lines of Python and Cpp Code Written in Last Month ({total} lines total)')
+    plt.title(f'Lines of Code Written in Last Month ({total} lines total)')
     plt.show()
 
 if __name__ == '__main__':
