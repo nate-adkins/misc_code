@@ -35,8 +35,8 @@ def main():
                        "CameraManager", 
                        "isaac_reinforcement_standalone",
                        "autonomy_2025",
+                       "rf_modem_pkg",
                        "rf-modem-stuff",
-                       "Ros2CommsSettings2025",
                     ]
     
     urc_repos =  [f'wvu-urc/' + name for name in urc_repos_names ]
@@ -60,7 +60,7 @@ def main():
     
     plt.figure(figsize=(10, 6))
     plt.pie(data_count.values(), labels=data_count.keys(), autopct=lambda p: f'{int(p * total / 100)} ({p:.1f}%)')
-    plt.title(f'Lines of Code Written in Last Month ({total} lines total)')
+    plt.title(f'Lines of Code Written This Semester ({total} lines total)')
     plt.show()
 
 if __name__ == '__main__':
