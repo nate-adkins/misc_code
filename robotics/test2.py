@@ -5,16 +5,16 @@ import math
 from PIL import Image, ImageTk
 
 STATES = {
-    "EMPTY": 5,  # Free space is now represented by 5
+    "EMPTY": 5,
     "FILLED": 1
 }
 
 COLORS = {
     0: 'white',
     1: 'black',
-    2: 'blue',  # Start node
-    3: 'red',   # Goal node
-    4: 'green'  # Path nodes
+    2: 'blue',
+    3: 'red',
+    4: 'green'
 }
 
 MODES = {
@@ -81,16 +81,13 @@ def run_rrt_star():
     nodes.append(START)
     animate_rrt()
 
-# Add this function to increment iterations
 def add_more_iterations():
     animate_rrt(iteration=len(nodes), additional_iterations=100)
 
-# Modify the existing `animate_rrt` function
 current_iteration = 0
 max_iterations = 1000
 
 def run_rrt_star():
-    """Start RRT* pathfinding from scratch."""
     global current_iteration, max_iterations
     if not START or not GOAL:
         print("Start and Goal must be set!")
@@ -100,17 +97,15 @@ def run_rrt_star():
     edges.clear()
     nodes.append(START)
     current_iteration = 0
-    max_iterations = 1000  # Initial run starts with 1000 iterations
+    max_iterations = 1000
     animate_rrt()
 
 def add_more_iterations():
-    """Add 100 iterations to the running RRT* process."""
     global max_iterations
     max_iterations += 1000
     animate_rrt()
 
 def animate_rrt():
-    """Perform RRT* iterations."""
     global current_iteration
 
     if current_iteration >= max_iterations:
@@ -118,14 +113,14 @@ def animate_rrt():
         return
 
     rand_node = (random.randint(0, WIDTH - 1), random.randint(0, HEIGHT - 1))
-    if not cost_map[rand_node[1], rand_node[0]]:  # Check for free space
+    if not cost_map[rand_node[1], rand_node[0]]:
         current_iteration += 1
         root.after(1, animate_rrt)
         return
     
     nearest_node = min(nodes, key=lambda n: math.dist(n, rand_node))
     new_node = step_towards(nearest_node, rand_node)
-    if not cost_map[new_node[1], new_node[0]]:  # Check for free space
+    if not cost_map[new_node[1], new_node[0]]:
         current_iteration += 1
         root.after(1, animate_rrt)
         return
@@ -160,7 +155,6 @@ def draw_path():
     update_canvas()
 
 def clear_canvas():
-    """Clear all nodes, edges, and start/goal positions."""
     global START, GOAL, nodes, edges
     START = None
     GOAL = None
