@@ -1,1 +1,1 @@
-# For storing all of the little tools or experiments I do that I might have otherwise deleted
+# For storing random code I may otherwise have thrown out

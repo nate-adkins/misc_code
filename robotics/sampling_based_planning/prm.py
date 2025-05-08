@@ -1,3 +1,0 @@
-'''
-Probabilistic Road Maps
-'''
